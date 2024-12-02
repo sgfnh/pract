@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form onsubmit="login(event)">
+        <label for="email">Mail :</label>
+        <input type="email" name="email" id="email" required>
+        <label for="password">Password :</label>
+        <input type="text" name="password" id="password" required>
+        <button type="submit">Log in</button>
+    </form>
+    <a href='../expense/expense.html'> Existing User - Login</a>
+
+</body>
+<script>
+    function login(event){
+        event.preventDefault()
+        const loginD={
+            email:event.target.email.value,
+            password:event.target.password.value
+        }
+        console.log(loginD)
+        axios.post('http://localhost:3000/user/login',loginD)
+        .then(res=>{
+                alert(res.data.message)
+                window.location.href = "../expense/expense.html"
+            }
+        )
+        .catch(err=>{
+            console.log(JSON.stringify(err))
+            document.body.innerHTML+=`<div style="color:black;">${err.message}</div>`
+        })
+    }
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.8/axios.min.js"></script>
+</html>
